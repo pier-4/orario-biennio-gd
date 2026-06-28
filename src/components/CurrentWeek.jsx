@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import academicWeeks from "@/lib/weeks.json";
 
-function getWeekInfo(day, month, year) {
-  const today = new Date(Number(year), Number(month) - 1, Number(day));
-  today.setHours(0, 0, 0, 0);
+function getWeekInfo(date) {
+  const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
   const active = academicWeeks.find((w) => {
     const [sY, sM, sD] = w.start.split("-");
     const start = new Date(Number(sY), Number(sM) - 1, Number(sD));
-    start.setHours(0, 0, 0, 0);
     const [eY, eM, eD] = w.end.split("-");
     const end = new Date(Number(eY), Number(eM) - 1, Number(eD));
     end.setHours(23, 59, 59, 999);
@@ -16,7 +14,6 @@ function getWeekInfo(day, month, year) {
   });
 
   if (!active || active.term === "Break") return null;
-
   const isA = active.week % 2 !== 0;
   return {
     term: active.term,
@@ -28,30 +25,150 @@ function getWeekInfo(day, month, year) {
   };
 }
 
-function toInputValue(date) {
-  const y = date.getFullYear();
-  const m = String(date.getMonth() + 1).padStart(2, "0");
-  const d = String(date.getDate()).padStart(2, "0");
-  return `${y}-${m}-${d}`;
+const MONTHS = [
+  "Gennaio",
+  "Febbraio",
+  "Marzo",
+  "Aprile",
+  "Maggio",
+  "Giugno",
+  "Luglio",
+  "Agosto",
+  "Settembre",
+  "Ottobre",
+  "Novembre",
+  "Dicembre",
+];
+const DAYS_SHORT = ["Lu", "Ma", "Me", "Gi", "Ve", "Sa", "Do"];
+
+function formatDate(date) {
+  return `${String(date.getDate()).padStart(2, "0")}/${String(date.getMonth() + 1).padStart(2, "0")}/${date.getFullYear()}`;
+}
+
+function CalendarPopup({ selected, onSelect, onClose }) {
+  const [viewYear, setViewYear] = useState(selected.getFullYear());
+  const [viewMonth, setViewMonth] = useState(selected.getMonth());
+
+  const firstDay = new Date(viewYear, viewMonth, 1);
+  // Monday-based: 0=Mon ... 6=Sun
+  const startOffset = (firstDay.getDay() + 6) % 7;
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+  const prevMonth = () => {
+    if (viewMonth === 0) {
+      setViewMonth(11);
+      setViewYear((y) => y - 1);
+    } else setViewMonth((m) => m - 1);
+  };
+  const nextMonth = () => {
+    if (viewMonth === 11) {
+      setViewMonth(0);
+      setViewYear((y) => y + 1);
+    } else setViewMonth((m) => m + 1);
+  };
+
+  const cells = [];
+  for (let i = 0; i < startOffset; i++) cells.push(null);
+  for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+
+  return (
+    <div className="absolute top-full left-0 mt-2 z-50 bg-white border border-slate-200 rounded-xl shadow-xl p-3 w-64">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-3">
+        <button
+          onClick={prevMonth}
+          className="p-1 rounded hover:bg-slate-100 text-slate-600 cursor-pointer"
+        >
+          ‹
+        </button>
+        <span className="text-sm font-semibold text-slate-800">
+          {MONTHS[viewMonth]} {viewYear}
+        </span>
+        <button
+          onClick={nextMonth}
+          className="p-1 rounded hover:bg-slate-100 text-slate-600 cursor-pointer"
+        >
+          ›
+        </button>
+      </div>
+
+      {/* Day headers */}
+      <div className="grid grid-cols-7 mb-1">
+        {DAYS_SHORT.map((d) => (
+          <div
+            key={d}
+            className="text-center text-[10px] font-bold text-slate-400 py-1"
+          >
+            {d}
+          </div>
+        ))}
+      </div>
+
+      {/* Day cells */}
+      <div className="grid grid-cols-7 gap-y-1">
+        {cells.map((day, i) => {
+          if (!day) return <div key={`empty-${i}`} />;
+          const thisDate = new Date(viewYear, viewMonth, day);
+          const isSelected =
+            selected.getDate() === day &&
+            selected.getMonth() === viewMonth &&
+            selected.getFullYear() === viewYear;
+          return (
+            <button
+              key={day}
+              onClick={() => {
+                onSelect(thisDate);
+                onClose();
+              }}
+              className={`text-xs rounded-md py-1 cursor-pointer transition-colors ${
+                isSelected
+                  ? "bg-blue-500 text-white font-bold"
+                  : "text-slate-700 hover:bg-slate-100"
+              }`}
+            >
+              {day}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default function CurrentWeekIndicator() {
   const now = new Date();
-  const [dateStr, setDateStr] = useState(toInputValue(now));
-  const [currentInfo, setCurrentInfo] = useState(() => {
-    return getWeekInfo(now.getDate(), now.getMonth() + 1, now.getFullYear());
-  });
+  now.setHours(0, 0, 0, 0);
+
+  const [selected, setSelected] = useState(now);
+  const [open, setOpen] = useState(false);
+  const [currentInfo, setCurrentInfo] = useState(() => getWeekInfo(now));
+  const ref = useRef(null);
 
   useEffect(() => {
-    if (!dateStr) return;
-    const [y, m, d] = dateStr.split("-");
-    setCurrentInfo(getWeekInfo(d, m, y));
-  }, [dateStr]);
+    setCurrentInfo(getWeekInfo(selected));
+  }, [selected]);
 
-  const handleChange = (e) => setDateStr(e.target.value);
+  // Close on outside click — use timeout to avoid same-click closing
+  useEffect(() => {
+    if (!open) return;
+    let timer;
+    const handler = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        timer = setTimeout(() => setOpen(false), 10);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    document.addEventListener("touchend", handler);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("mousedown", handler);
+      document.removeEventListener("touchend", handler);
+    };
+  }, [open]);
 
   return (
     <div className="flex flex-wrap items-center gap-3 mb-4 font-sans">
+      {/* Week indicator */}
       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 bg-white shadow-sm">
         {currentInfo ? (
           <>
@@ -75,17 +192,21 @@ export default function CurrentWeekIndicator() {
         )}
       </div>
 
-      <div className="relative">
-        <input
-          type="date"
-          value={dateStr}
-          onChange={handleChange}
-          onBlur={handleChange}
-          className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
-        />
-        <div className="px-3 py-1.5 text-sm rounded-md border border-slate-200 bg-white text-slate-700 shadow-sm pointer-events-none select-none">
-          {dateStr || "Seleziona data"}
-        </div>
+      {/* Date picker button */}
+      <div className="relative" ref={ref}>
+        <button
+          onClick={() => setOpen((o) => !o)}
+          className="px-3 py-1.5 text-sm rounded-md border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50 cursor-pointer"
+        >
+          📅 {formatDate(selected)}
+        </button>
+        {open && (
+          <CalendarPopup
+            selected={selected}
+            onSelect={setSelected}
+            onClose={() => setOpen(false)}
+          />
+        )}
       </div>
 
       <a
