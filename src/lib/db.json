@@ -1,0 +1,137 @@
+[
+  {
+    "id": "brand-design-1",
+    "subject": "Brand design",
+    "professor": "Senia Antonio",
+    "dayOfWeek": "Wednesday",
+    "term": ["T2", "T3"],
+    "week": ["A"],
+    "period": ["AM"]
+  },
+  {
+    "id": "brand-design-2",
+    "subject": "Brand design",
+    "professor": "Senia Antonio",
+    "dayOfWeek": "Thursday",
+    "term": ["T2"],
+    "week": ["B"],
+    "period": ["PM"]
+  },
+  {
+    "id": "diritto-1",
+    "subject": "Diritto dell'informazione e della comunicazione digitale",
+    "professor": "Catalisano Giovanni",
+    "dayOfWeek": "Thursday",
+    "term": ["T1"],
+    "week": ["B"],
+    "period": ["PM"]
+  },
+  {
+    "id": "diritto-2",
+    "subject": "Diritto dell'informazione e della comunicazione digitale",
+    "professor": "Catalisano Giovanni",
+    "dayOfWeek": "Friday",
+    "term": ["T1"],
+    "week": ["B"],
+    "period": ["PM"]
+  },
+  {
+    "id": "ecodesign-1",
+    "subject": "Ecodesign",
+    "professor": "Mazzoli Sergio",
+    "dayOfWeek": "Monday",
+    "term": ["T1", "T2"],
+    "week": ["A", "B"],
+    "period": ["PM"]
+  },
+  {
+    "id": "grafica-multi-1",
+    "subject": "Grafica multimediale",
+    "professor": "Roma Marco",
+    "dayOfWeek": "Monday",
+    "term": ["T2"],
+    "week": ["A", "B"],
+    "period": ["AM"]
+  },
+  {
+    "id": "grafica-multi-2",
+    "subject": "Grafica multimediale",
+    "professor": "Roma Marco",
+    "dayOfWeek": "Wednesday",
+    "term": ["T2"],
+    "week": ["B"],
+    "period": ["AM", "PM"]
+  },
+  {
+    "id": "graphic-design-3",
+    "subject": "Graphic design 3",
+    "professor": "Iannarilli Paola",
+    "dayOfWeek": "Tuesday",
+    "term": ["T1", "T2"],
+    "week": ["A", "B"],
+    "period": ["AM", "PM"]
+  },
+  {
+    "id": "inglese-1",
+    "subject": "Inglese per la comunicazione artistica",
+    "professor": "Garri Rosetta",
+    "dayOfWeek": "Thursday",
+    "term": ["T3"],
+    "week": ["B"],
+    "period": ["AM"]
+  },
+  {
+    "id": "inglese-2",
+    "subject": "Inglese per la comunicazione artistica",
+    "professor": "Garri Rosetta",
+    "dayOfWeek": "Thursday",
+    "term": ["T3"],
+    "week": ["A"],
+    "period": ["PM"]
+  },
+  {
+    "id": "inglese-3",
+    "subject": "Inglese per la comunicazione artistica",
+    "professor": "Garri Rosetta",
+    "dayOfWeek": "Friday",
+    "term": ["T3"],
+    "week": ["B"],
+    "period": ["AM"]
+  },
+  {
+    "id": "storia-arte-1",
+    "subject": "Storia dell'arte contemporanea 3",
+    "professor": "Rea Loredana",
+    "dayOfWeek": "Friday",
+    "term": ["T1"],
+    "week": ["B"],
+    "period": ["AM"]
+  },
+  {
+    "id": "storia-arte-2",
+    "subject": "Storia dell'arte contemporanea 3",
+    "professor": "Rea Loredana",
+    "dayOfWeek": "Saturday",
+    "term": ["T1"],
+    "week": ["B"],
+    "period": ["AM"]
+  },
+  {
+    "id": "tecniche-media-1",
+    "subject": "Tecniche dei nuovi media integrati",
+    "professor": "Belluscio Antonio",
+    "dayOfWeek": "Thursday",
+    "term": ["T1", "T2"],
+    "week": ["A"],
+    "period": ["AM"]
+  },
+  {
+    "id": "tecniche-media-2",
+    "subject": "Tecniche dei nuovi media integrati",
+    "professor": "Belluscio Antonio",
+    "dayOfWeek": "Friday",
+    "term": ["T1", "T2"],
+    "week": ["A"],
+    "period": ["AM"]
+  }
+]
