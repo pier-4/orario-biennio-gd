@@ -17,41 +17,93 @@ const TERMS = ["T1", "T2", "T3"];
 
 export default function Schedule() {
   const [activeTerm, setActiveTerm] = useState("T1");
+  const [activeWeeks, setActiveWeeks] = useState(["A", "B"]);
 
-  // Filtra i dati in base al trimestre selezionato
-  const termData = data.filter((item) => item.term.includes(activeTerm));
+  // Toggle logica: previene la deselezione di entrambe le settimane
+  const toggleWeek = (week) => {
+    if (activeWeeks.includes(week)) {
+      if (activeWeeks.length > 0) {
+        setActiveWeeks(activeWeeks.filter((w) => w !== week));
+      }
+    } else {
+      setActiveWeeks([...activeWeeks, week]);
+    }
+  };
+
+  // Filtra i dati in base al trimestre e alle settimane selezionate
+  const filteredData = data.filter((item) => {
+    const isTermMatch = item.term.includes(activeTerm);
+    const isWeekMatch = item.week.some((w) => activeWeeks.includes(w));
+    return isTermMatch && isWeekMatch;
+  });
 
   return (
     <div className="flex flex-col max-w-7xl mx-auto p-4 font-sans bg-zinc-800 min-h-screen min-w-screen">
       {/* current week indicator */}
       <CurrentWeekIndicator />
 
-      {/* Controlli Trimestre */}
-      <div
-        className="flex gap-2 mb-8"
-        role="group"
-        aria-label="Selettore trimestre"
-      >
-        {TERMS.map((term) => (
+      {/* Controlli Filtri */}
+      <div className="flex flex-wrap items-center gap-6 mb-8">
+        {/* Filtro Trimestre */}
+        <div
+          className="flex gap-2"
+          role="group"
+          aria-label="Selettore trimestre"
+        >
+          {TERMS.map((term) => (
+            <button
+              key={term}
+              onClick={() => setActiveTerm(term)}
+              aria-pressed={activeTerm === term}
+              className={`px-6 py-2 rounded-md font-semibold transition-colors cursor-pointer ${
+                activeTerm === term
+                  ? "bg-blue-500 text-white shadow-md"
+                  : "bg-slate-200 text-slate-700 hover:bg-slate-300"
+              }`}
+            >
+              {term}
+            </button>
+          ))}
+        </div>
+
+        {/* Divisore Visivo */}
+        <div className="hidden sm:block w-px h-8 bg-zinc-600 rounded-full"></div>
+
+        {/* Filtro Settimane */}
+        <div
+          className="flex gap-2"
+          role="group"
+          aria-label="Selettore settimane"
+        >
           <button
-            key={term}
-            onClick={() => setActiveTerm(term)}
-            aria-pressed={activeTerm === term}
-            className={`px-6 py-2 rounded-md font-semibold transition-colors cursor-pointer ${
-              activeTerm === term
-                ? "bg-blue-500 text-white"
-                : "bg-slate-200 text-slate-700 hover:bg-slate-300"
+            onClick={() => toggleWeek("A")}
+            className={`px-6 py-2 rounded-md font-bold transition-all border cursor-pointer ${
+              activeWeeks.includes("A")
+                ? "bg-red-100 text-red-700 border-red-300 shadow-sm"
+                : "bg-slate-200/50 text-slate-500 border-transparent hover:bg-slate-200"
             }`}
           >
-            {term}
+            Settimana A
           </button>
-        ))}
+          <button
+            onClick={() => toggleWeek("B")}
+            className={`px-6 py-2 rounded-md font-bold transition-all border cursor-pointer ${
+              activeWeeks.includes("B")
+                ? "bg-blue-100 text-blue-700 border-blue-300 shadow-sm"
+                : "bg-slate-200/50 text-slate-500 border-transparent hover:bg-slate-200"
+            }`}
+          >
+            Settimana B
+          </button>
+        </div>
       </div>
 
       {/* Griglia Calendario */}
       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         {DAYS.map((day) => {
-          const dayClasses = termData.filter((item) => item.dayOfWeek === day);
+          const dayClasses = filteredData.filter(
+            (item) => item.dayOfWeek === day,
+          );
           const amClasses = dayClasses.filter((item) =>
             item.period.includes("AM"),
           );
