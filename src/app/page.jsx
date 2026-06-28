@@ -17,23 +17,12 @@ const TERMS = ["T1", "T2", "T3"];
 
 export default function Schedule() {
   const [activeTerm, setActiveTerm] = useState("T1");
-  const [activeWeeks, setActiveWeeks] = useState(["A", "B"]);
-
-  // Toggle logica: previene la deselezione di entrambe le settimane
-  const toggleWeek = (week) => {
-    if (activeWeeks.includes(week)) {
-      if (activeWeeks.length > 0) {
-        setActiveWeeks(activeWeeks.filter((w) => w !== week));
-      }
-    } else {
-      setActiveWeeks([...activeWeeks, week]);
-    }
-  };
+  const [activeWeek, setActiveWeek] = useState("A");
 
   // Filtra i dati in base al trimestre e alle settimane selezionate
   const filteredData = data.filter((item) => {
     const isTermMatch = item.term.includes(activeTerm);
-    const isWeekMatch = item.week.some((w) => activeWeeks.includes(w));
+    const isWeekMatch = item.week.includes(activeWeek);
     return isTermMatch && isWeekMatch;
   });
 
@@ -76,9 +65,9 @@ export default function Schedule() {
           aria-label="Selettore settimane"
         >
           <button
-            onClick={() => toggleWeek("A")}
+            onClick={() => setActiveWeek("A")}
             className={`px-6 py-2 rounded-md font-bold transition-all border cursor-pointer ${
-              activeWeeks.includes("A")
+              activeWeek === "A"
                 ? "bg-red-100 text-red-700 border-red-300 shadow-sm"
                 : "bg-slate-200/50 text-slate-500 border-transparent hover:bg-slate-200"
             }`}
@@ -86,9 +75,9 @@ export default function Schedule() {
             Settimana A
           </button>
           <button
-            onClick={() => toggleWeek("B")}
+            onClick={() => setActiveWeek("B")}
             className={`px-6 py-2 rounded-md font-bold transition-all border cursor-pointer ${
-              activeWeeks.includes("B")
+              activeWeek === "B"
                 ? "bg-blue-100 text-blue-700 border-blue-300 shadow-sm"
                 : "bg-slate-200/50 text-slate-500 border-transparent hover:bg-slate-200"
             }`}
