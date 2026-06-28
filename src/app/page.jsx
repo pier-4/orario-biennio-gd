@@ -21,7 +21,7 @@ export default function Schedule() {
   const termData = data.filter((item) => item.term.includes(activeTerm));
 
   return (
-    <div className="max-w-7xl mx-auto p-4 font-sans bg-zinc-100 min-h-screen min-w-screen">
+    <div className="max-w-7xl mx-auto p-4 font-sans bg-zinc-800 min-h-screen min-w-screen">
       {/* Controlli Trimestre */}
       <div
         className="flex gap-2 mb-8"
