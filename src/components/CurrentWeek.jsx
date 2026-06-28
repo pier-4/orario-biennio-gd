@@ -75,13 +75,18 @@ export default function CurrentWeekIndicator() {
         )}
       </div>
 
-      <input
-        type="date"
-        value={dateStr}
-        onChange={handleChange}
-        onBlur={handleChange}
-        className="px-3 py-1.5 text-sm rounded-md border border-slate-200 bg-white text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
-      />
+      <div className="relative">
+        <input
+          type="date"
+          value={dateStr}
+          onChange={handleChange}
+          onBlur={handleChange}
+          className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
+        />
+        <div className="px-3 py-1.5 text-sm rounded-md border border-slate-200 bg-white text-slate-700 shadow-sm pointer-events-none select-none">
+          {dateStr || "Seleziona data"}
+        </div>
+      </div>
 
       <a
         href="/bozza-calendario-26.pdf"
