@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import CurrentWeekIndicator from "@/components/CurrentWeek";
 
 // Sostituisci con il tuo import effettivo
 import data from "../lib/db.json";
@@ -21,7 +22,10 @@ export default function Schedule() {
   const termData = data.filter((item) => item.term.includes(activeTerm));
 
   return (
-    <div className="max-w-7xl mx-auto p-4 font-sans bg-zinc-800 min-h-screen min-w-screen">
+    <div className="flex flex-col max-w-7xl mx-auto p-4 font-sans bg-zinc-800 min-h-screen min-w-screen">
+      {/* current week indicator */}
+      <CurrentWeekIndicator />
+
       {/* Controlli Trimestre */}
       <div
         className="flex gap-2 mb-8"
@@ -33,9 +37,9 @@ export default function Schedule() {
             key={term}
             onClick={() => setActiveTerm(term)}
             aria-pressed={activeTerm === term}
-            className={`px-6 py-2 rounded-md font-semibold transition-colors ${
+            className={`px-6 py-2 rounded-md font-semibold transition-colors cursor-pointer ${
               activeTerm === term
-                ? "bg-slate-900 text-white"
+                ? "bg-blue-500 text-white"
                 : "bg-slate-200 text-slate-700 hover:bg-slate-300"
             }`}
           >
@@ -45,7 +49,7 @@ export default function Schedule() {
       </div>
 
       {/* Griglia Calendario */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         {DAYS.map((day) => {
           const dayClasses = termData.filter((item) => item.dayOfWeek === day);
           const amClasses = dayClasses.filter((item) =>
@@ -60,13 +64,13 @@ export default function Schedule() {
               key={day}
               className="flex flex-col border rounded-lg bg-slate-50 overflow-hidden"
             >
-              <header className="bg-slate-200 p-3 text-center font-bold uppercase tracking-wider text-sm text-slate-800">
+              <header className="bg-slate-200 p-3 text-center font-extrabold uppercase tracking-wider text-base text-slate-800">
                 {day}
               </header>
 
               {/* Fascia AM */}
               <div className="flex-1 p-3 border-b border-slate-200">
-                <h3 className="text-xs font-bold text-slate-400 mb-3 uppercase flex items-center justify-between">
+                <h3 className="text-xs font-bold text-slate-500 mb-3 uppercase flex items-center justify-between">
                   <span>AM</span>
                   <span>09:00 - 13:00</span>
                 </h3>
@@ -84,7 +88,7 @@ export default function Schedule() {
 
               {/* Fascia PM */}
               <div className="flex-1 p-3">
-                <h3 className="text-xs font-bold text-slate-400 mb-3 uppercase flex items-center justify-between">
+                <h3 className="text-xs font-bold text-slate-500 mb-3 uppercase flex items-center justify-between">
                   <span>PM</span>
                   <span>14:00 - 18:00</span>
                 </h3>
@@ -110,7 +114,7 @@ export default function Schedule() {
 // Sotto-componente per le singole schede materia
 function ClassCard({ data }) {
   return (
-    <li className="bg-white p-3 rounded shadow-sm border border-slate-100 flex flex-col gap-2">
+    <li className="bg-white p-3 rounded shadow-sm border border-slate-300 flex flex-col gap-2">
       <h4 className="font-semibold text-sm leading-tight text-slate-900">
         {data.subject}
       </h4>
