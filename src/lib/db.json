@@ -63,8 +63,8 @@
     "period": ["AM", "PM"]
   },
   {
-    "id": "graphic-design-3",
-    "subject": "Graphic design 3",
+    "id": "graphic-design-1-biennio",
+    "subject": "Graphic design 1-B",
     "professor": "Iannarilli Paola",
     "dayOfWeek": "Tuesday",
     "term": ["T1", "T2"],
@@ -100,7 +100,7 @@
   },
   {
     "id": "storia-arte-1",
-    "subject": "Storia dell'arte contemporanea 3",
+    "subject": "Storia dell'arte contemporanea 1-B",
     "professor": "Rea Loredana",
     "dayOfWeek": "Friday",
     "term": ["T1"],
@@ -109,7 +109,7 @@
   },
   {
     "id": "storia-arte-2",
-    "subject": "Storia dell'arte contemporanea 3",
+    "subject": "Storia dell'arte contemporanea 1-B",
     "professor": "Rea Loredana",
     "dayOfWeek": "Saturday",
     "term": ["T1"],
@@ -117,21 +117,12 @@
     "period": ["AM"]
   },
   {
-    "id": "tecniche-media-1",
-    "subject": "Tecniche dei nuovi media integrati",
-    "professor": "Belluscio Antonio",
-    "dayOfWeek": "Thursday",
-    "term": ["T1", "T2"],
-    "week": ["A"],
-    "period": ["AM"]
-  },
-  {
-    "id": "tecniche-media-2",
-    "subject": "Tecniche dei nuovi media integrati",
-    "professor": "Belluscio Antonio",
+    "id": "digital-video",
+    "subject": "Digital video",
+    "professor": "prof da definire",
     "dayOfWeek": "Friday",
-    "term": ["T1", "T2"],
-    "week": ["A"],
-    "period": ["AM"]
+    "term": ["T3"],
+    "week": ["A", "B"],
+    "period": ["AM", "PM"]
   }
 ]
