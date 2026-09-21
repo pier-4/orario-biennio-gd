@@ -117,12 +117,21 @@
     "period": ["AM"]
   },
   {
-    "id": "digital-video",
-    "subject": "Digital video",
-    "professor": "prof da definire",
+    "id": "tecniche-media-1",
+    "subject": "Tecniche dei nuovi media integrati",
+    "professor": "Belluscio Antonio",
+    "dayOfWeek": "Thursday",
+    "term": ["T1", "T2"],
+    "week": ["A"],
+    "period": ["AM"]
+  },
+  {
+    "id": "tecniche-media-2",
+    "subject": "Tecniche dei nuovi media integrati",
+    "professor": "Belluscio Antonio",
     "dayOfWeek": "Friday",
-    "term": ["T3"],
-    "week": ["A", "B"],
-    "period": ["AM", "PM"]
+    "term": ["T1", "T2"],
+    "week": ["A"],
+    "period": ["AM"]
   }
 ]
