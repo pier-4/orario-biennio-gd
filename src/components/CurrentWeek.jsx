@@ -215,7 +215,7 @@ export default function CurrentWeekIndicator() {
       </div>
 
       <a
-        href="/bozza-calendario-26.pdf"
+        href="https://www.accademiabellearti.fr.it/didattica/calendario-didattico/"
         target="_blank"
         rel="noopener noreferrer"
         className="text-sm text-blue-400 hover:text-blue-700 hover:underline font-medium ml-2"
