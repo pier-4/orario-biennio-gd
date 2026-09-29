@@ -4,18 +4,30 @@
     "subject": "Brand design",
     "professor": "Senia Antonio",
     "dayOfWeek": "Wednesday",
-    "term": ["T2", "T3"],
+    "term": ["T2"],
     "week": ["A"],
-    "period": ["AM"]
+    "period": ["AM"],
+    "classe": "12"
   },
   {
     "id": "brand-design-2",
     "subject": "Brand design",
     "professor": "Senia Antonio",
+    "dayOfWeek": "Wednesday",
+    "term": ["T3"],
+    "week": ["A"],
+    "period": ["AM"],
+    "classe": "15"
+  },
+  {
+    "id": "brand-design-3",
+    "subject": "Brand design",
+    "professor": "Senia Antonio",
     "dayOfWeek": "Thursday",
     "term": ["T2"],
     "week": ["B"],
-    "period": ["PM"]
+    "period": ["PM"],
+    "classe": "15"
   },
   {
     "id": "diritto-1",
@@ -24,7 +36,8 @@
     "dayOfWeek": "Thursday",
     "term": ["T1"],
     "week": ["B"],
-    "period": ["PM"]
+    "period": ["PM"],
+    "classe": "16"
   },
   {
     "id": "diritto-2",
@@ -33,7 +46,8 @@
     "dayOfWeek": "Friday",
     "term": ["T1"],
     "week": ["B"],
-    "period": ["PM"]
+    "period": ["PM"],
+    "classe": "16"
   },
   {
     "id": "ecodesign-1",
@@ -42,7 +56,8 @@
     "dayOfWeek": "Monday",
     "term": ["T1", "T2"],
     "week": ["A", "B"],
-    "period": ["PM"]
+    "period": ["PM"],
+    "classe": "12"
   },
   {
     "id": "grafica-multi-1",
@@ -51,7 +66,8 @@
     "dayOfWeek": "Monday",
     "term": ["T2"],
     "week": ["A", "B"],
-    "period": ["AM"]
+    "period": ["AM"],
+    "classe": "27"
   },
   {
     "id": "grafica-multi-2",
@@ -60,7 +76,8 @@
     "dayOfWeek": "Wednesday",
     "term": ["T2"],
     "week": ["B"],
-    "period": ["AM", "PM"]
+    "period": ["AM", "PM"],
+    "classe": "27"
   },
   {
     "id": "graphic-design-1-biennio",
@@ -69,7 +86,8 @@
     "dayOfWeek": "Tuesday",
     "term": ["T1", "T2"],
     "week": ["A", "B"],
-    "period": ["AM", "PM"]
+    "period": ["AM", "PM"],
+    "classe": "27"
   },
   {
     "id": "inglese-1",
@@ -78,7 +96,8 @@
     "dayOfWeek": "Thursday",
     "term": ["T3"],
     "week": ["B"],
-    "period": ["AM"]
+    "period": ["AM"],
+    "classe": "11"
   },
   {
     "id": "inglese-2",
@@ -87,7 +106,8 @@
     "dayOfWeek": "Thursday",
     "term": ["T3"],
     "week": ["A"],
-    "period": ["PM"]
+    "period": ["PM"],
+    "classe": "11"
   },
   {
     "id": "inglese-3",
@@ -96,7 +116,8 @@
     "dayOfWeek": "Friday",
     "term": ["T3"],
     "week": ["B"],
-    "period": ["AM"]
+    "period": ["AM"],
+    "classe": "16"
   },
   {
     "id": "storia-arte-1",
@@ -105,7 +126,8 @@
     "dayOfWeek": "Friday",
     "term": ["T1"],
     "week": ["B"],
-    "period": ["AM"]
+    "period": ["AM"],
+    "classe": "27"
   },
   {
     "id": "storia-arte-2",
@@ -114,7 +136,8 @@
     "dayOfWeek": "Saturday",
     "term": ["T1"],
     "week": ["B"],
-    "period": ["AM"]
+    "period": ["AM"],
+    "classe": "27"
   },
   {
     "id": "tecniche-media-1",
@@ -123,7 +146,8 @@
     "dayOfWeek": "Thursday",
     "term": ["T1", "T2"],
     "week": ["A"],
-    "period": ["AM"]
+    "period": ["AM"],
+    "classe": "27"
   },
   {
     "id": "tecniche-media-2",
@@ -132,6 +156,7 @@
     "dayOfWeek": "Friday",
     "term": ["T1", "T2"],
     "week": ["A"],
-    "period": ["AM"]
+    "period": ["AM"],
+    "classe": "27"
   }
 ]
