@@ -140,11 +140,8 @@ export default function Schedule() {
           </div>
         </div>
 
-        {/* Griglia Calendario — re-mount al cambio filtri per la transizione */}
-        <div
-          key={`${activeTerm}-${activeWeek}`}
-          className="animate-grid-in grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4"
-        >
+        {/* Griglia Calendario — nessun re-mount: i filtri aggiornano istantaneamente */}
+        <div className="animate-grid-in grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
           {DAYS.map((day) => {
             const dayClasses = filteredData.filter(
               (item) => item.dayOfWeek === day,
@@ -249,18 +246,18 @@ function ClassCard({ data }) {
       <div className="flex items-center justify-between mt-auto pt-2">
         <div className="flex gap-1">
           {data.week.includes("A") && (
-            <span className="px-2 py-0.5 rounded-md max-sm:text-[9px] text-[8px] font-bold bg-red-100 text-red-700 border border-red-200">
-              Sett A
+            <span className="px-2 py-0.5 rounded-md  text-[10px] font-bold bg-red-100 text-red-700 border border-red-200">
+              A
             </span>
           )}
           {data.week.includes("B") && (
-            <span className="px-2 py-0.5 rounded-md max-sm:text-[9px] text-[8px] font-bold bg-blue-100 text-blue-700 border border-blue-200">
-              Sett B
+            <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-blue-100 text-blue-700 border border-blue-200">
+              B
             </span>
           )}
         </div>
 
-        <span className="px-2 py-0.5 rounded-md max-sm:text-[9px] text-[8px] font-medium bg-slate-100 text-slate-500 border border-slate-200">
+        <span className="px-2 py-0.5 rounded-md  text-[10px] font-medium bg-slate-100 text-slate-500 border border-slate-200">
           Aula {data.classe}
         </span>
       </div>
