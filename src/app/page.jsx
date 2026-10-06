@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import CurrentWeekIndicator from "@/components/CurrentWeek";
 
 // Sostituisci con il tuo import effettivo
@@ -19,6 +19,18 @@ export default function Schedule() {
   const [activeTerm, setActiveTerm] = useState("T1");
   const [activeWeek, setActiveWeek] = useState("A");
 
+  // Allinea i filtri alla settimana della data selezionata (all'avvio e quando
+  // si cambia data dal calendario). Fuori calendario o in pausa si ripiega
+  // sulla Settimana A, mentre il trimestre resta quello gia' scelto.
+  const handleInfoChange = useCallback((info) => {
+    if (!info) {
+      setActiveWeek("A");
+      return;
+    }
+    setActiveTerm(info.term);
+    setActiveWeek(info.type);
+  }, []);
+
   // Filtra i dati in base al trimestre e alle settimane selezionate
   const filteredData = data.filter((item) => {
     const isTermMatch = item.term.includes(activeTerm);
@@ -29,7 +41,7 @@ export default function Schedule() {
   return (
     <div className="flex flex-col max-w-7xl mx-auto p-4 font-sans bg-zinc-800 min-h-screen min-w-screen">
       {/* current week indicator */}
-      <CurrentWeekIndicator />
+      <CurrentWeekIndicator onInfoChange={handleInfoChange} />
 
       {/* Controlli Filtri */}
       <div className="flex flex-wrap items-center gap-6 mb-8">

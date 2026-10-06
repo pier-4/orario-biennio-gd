@@ -1,29 +1,5 @@
-import React, { useState, useEffect } from "react";
-import academicWeeks from "@/lib/weeks.json";
-
-function getWeekInfo(date) {
-  const today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-  const active = academicWeeks.find((w) => {
-    const [sY, sM, sD] = w.start.split("-");
-    const start = new Date(Number(sY), Number(sM) - 1, Number(sD));
-    const [eY, eM, eD] = w.end.split("-");
-    const end = new Date(Number(eY), Number(eM) - 1, Number(eD));
-    end.setHours(23, 59, 59, 999);
-    return today >= start && today <= end;
-  });
-
-  if (!active || active.term === "Break") return null;
-  const isA = active.week % 2 !== 0;
-  return {
-    term: active.term,
-    week: active.week,
-    type: isA ? "A" : "B",
-    colorClass: isA
-      ? "bg-red-100 text-red-700 border-red-200"
-      : "bg-blue-100 text-blue-700 border-blue-200",
-  };
-}
+import React, { useState, useEffect, useMemo } from "react";
+import { getWeekInfo } from "@/lib/academicWeeks";
 
 const MONTHS = [
   "Gennaio",
@@ -161,34 +137,36 @@ function CalendarPopup({ selected, onSelect, onClose }) {
   );
 }
 
-export default function CurrentWeekIndicator() {
+export default function CurrentWeekIndicator({ onInfoChange }) {
   const now = new Date();
   now.setHours(0, 0, 0, 0);
 
   const [selected, setSelected] = useState(now);
   const [open, setOpen] = useState(false);
-  const [currentInfo, setCurrentInfo] = useState(() => getWeekInfo(now));
+  const info = useMemo(() => getWeekInfo(selected), [selected]);
 
+  // Comunica al genitore la settimana risolta (null durante le pause),
+  // cosi' il toggle Settimana A/B e il trimestre restano coerenti con la data.
   useEffect(() => {
-    setCurrentInfo(getWeekInfo(selected));
-  }, [selected]);
+    onInfoChange?.(info);
+  }, [info, onInfoChange]);
 
   return (
     <div className="flex flex-wrap items-center gap-3 mb-4 font-sans">
       <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 bg-white shadow-sm">
-        {currentInfo ? (
+        {info ? (
           <>
             <span className="font-black text-slate-800 text-lg">
-              {currentInfo.term}
+              {info.term}
             </span>
             <span className="text-slate-300 font-bold">•</span>
             <span className="font-semibold text-slate-700">
-              {currentInfo.week}
+              {info.week}
             </span>
             <span
-              className={`px-2 py-0.5 rounded text-xs font-bold border ${currentInfo.colorClass}`}
+              className={`px-2 py-0.5 rounded text-xs font-bold border ${info.colorClass}`}
             >
-              {currentInfo.type}
+              {info.type}
             </span>
           </>
         ) : (
