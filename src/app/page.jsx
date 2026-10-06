@@ -74,8 +74,8 @@ export default function Schedule() {
       {/* Barra superiore: titolo + indicatore settimana/data */}
       <header className="border-b border-zinc-700 bg-zinc-800/85">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <h1 className="text-lg font-black tracking-tight pl-1 text-white whitespace-nowrap">
-            Orari <span className="text-orange-300">GD</span> Biennio
+          <h1 className="text-lg font-semibold tracking-tight pl-1 text-zinc-300 whitespace-nowrap">
+            Orari <span className="text-zinc-50">GD</span> Biennio
           </h1>
           <CurrentWeekIndicator onInfoChange={handleInfoChange} />
         </div>
