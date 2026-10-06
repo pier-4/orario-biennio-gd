@@ -178,7 +178,7 @@ export default function CurrentWeekIndicator({ onInfoChange }) {
               {info.term}
             </span>
             <span className="text-slate-300 font-bold">•</span>
-            <span className="font-semibold text-slate-600 text-sm tabular-nums">
+            <span className="font-medium text-slate-600 text-sm tabular-nums">
               Sett. {info.week}
             </span>
             <span

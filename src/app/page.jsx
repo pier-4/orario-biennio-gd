@@ -141,7 +141,8 @@ export default function Schedule() {
         </div>
 
         {/* Griglia Calendario — nessun re-mount: i filtri aggiornano istantaneamente */}
-        <div className="animate-grid-in grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+        {/* aggiunto min-h per tenere più separazione tra am e pm -- aggiunto mt-10 per separare la griglia dai filtri */}
+        <div className="mt-10 animate-grid-in grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 lg:min-h-[50vh] ">
           {DAYS.map((day) => {
             const dayClasses = filteredData.filter(
               (item) => item.dayOfWeek === day,
