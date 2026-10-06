@@ -74,8 +74,8 @@ export default function Schedule() {
       {/* Barra superiore: titolo + indicatore settimana/data */}
       <header className="border-b border-zinc-700 bg-zinc-800/85">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
-          <h1 className="text-base sm:text-lg font-black tracking-tight text-white whitespace-nowrap">
-            Orari <span className="text-blue-400">GD</span> Biennio
+          <h1 className="text-lg font-black tracking-tight pl-1 text-white whitespace-nowrap">
+            Orari <span className="text-orange-300">GD</span> Biennio
           </h1>
           <CurrentWeekIndicator onInfoChange={handleInfoChange} />
         </div>
@@ -237,7 +237,7 @@ function EmptyState() {
 function ClassCard({ data }) {
   return (
     <li className="bg-white p-3 rounded-lg border border-slate-300 shadow-sm flex flex-col gap-2 transition hover:shadow-md hover:border-slate-400">
-      <h4 className="font-semibold text-sm leading-snug text-slate-900">
+      <h4 className="font-semibold text-sm xl:text-[13px] leading-snug text-slate-900">
         {data.subject}
       </h4>
       <p className="text-xs text-slate-500">{data.professor}</p>
