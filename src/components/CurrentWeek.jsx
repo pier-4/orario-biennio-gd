@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { createPortal } from "react-dom";
 import { getWeekInfo } from "@/lib/academicWeeks";
 
 const MONTHS = [
@@ -51,16 +52,18 @@ function CalendarGrid({ selected, onSelect, onClose }) {
       <div className="flex items-center justify-between mb-3">
         <button
           onClick={prevMonth}
-          className="p-1 rounded hover:bg-slate-100 text-slate-600 cursor-pointer"
+          aria-label="Mese precedente"
+          className="p-2 rounded-full hover:bg-slate-100 text-slate-600 cursor-pointer transition-colors"
         >
           ‹
         </button>
-        <span className="text-sm font-semibold text-slate-800">
+        <span className="text-sm font-bold text-slate-800">
           {MONTHS[viewMonth]} {viewYear}
         </span>
         <button
           onClick={nextMonth}
-          className="p-1 rounded hover:bg-slate-100 text-slate-600 cursor-pointer"
+          aria-label="Mese successivo"
+          className="p-2 rounded-full hover:bg-slate-100 text-slate-600 cursor-pointer transition-colors"
         >
           ›
         </button>
@@ -83,6 +86,10 @@ function CalendarGrid({ selected, onSelect, onClose }) {
             selected.getDate() === day &&
             selected.getMonth() === viewMonth &&
             selected.getFullYear() === viewYear;
+          const isToday =
+            new Date().getFullYear() === viewYear &&
+            new Date().getMonth() === viewMonth &&
+            new Date().getDate() === day;
           return (
             <button
               key={day}
@@ -90,10 +97,12 @@ function CalendarGrid({ selected, onSelect, onClose }) {
                 onSelect(thisDate);
                 onClose();
               }}
-              className={`text-xs rounded-md py-1 cursor-pointer transition-colors ${
+              className={`text-sm rounded-full aspect-square flex items-center justify-center cursor-pointer transition-colors ${
                 isSelected
-                  ? "bg-blue-500 text-white font-bold"
-                  : "text-slate-700 hover:bg-slate-100"
+                  ? "bg-blue-600 text-white font-bold shadow-sm"
+                  : isToday
+                    ? "ring-1 ring-blue-300 font-semibold text-blue-700 hover:bg-blue-50"
+                    : "text-slate-700 hover:bg-slate-100"
               }`}
             >
               {day}
@@ -108,25 +117,33 @@ function CalendarGrid({ selected, onSelect, onClose }) {
 function CalendarPopup({ selected, onSelect, onClose }) {
   return (
     <>
-      {/* Mobile: fullscreen centered modal */}
-      <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 md:hidden"
-        onClick={onClose}
-      >
-        <div
-          className="bg-white border border-slate-200 rounded-xl shadow-xl p-3 w-64"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <CalendarGrid
-            selected={selected}
-            onSelect={onSelect}
-            onClose={onClose}
-          />
-        </div>
-      </div>
+      {/* Mobile: bottom sheet che scorre dal basso.
+          Portaled su <body>: backdrop-blur della barra sticky creerebbe un
+          containing block per gli elementi fixed, vincolandola all'header. */}
+      {typeof document !== "undefined" &&
+        createPortal(
+          <div
+            className="fixed inset-0 z-50 flex items-end bg-slate-900/30 backdrop-blur-sm md:hidden"
+            onClick={onClose}
+          >
+            <div
+              className="animate-sheet-in w-full bg-white border-t border-slate-200 rounded-t-2xl shadow-2xl p-4 pb-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Maniglia del foglio */}
+              <div className="w-10 h-1.5 rounded-full bg-slate-300 mx-auto mb-4" />
+              <CalendarGrid
+                selected={selected}
+                onSelect={onSelect}
+                onClose={onClose}
+              />
+            </div>
+          </div>,
+          document.body,
+        )}
 
-      {/* Desktop: dropdown below button */}
-      <div className="absolute top-full left-0 mt-2 z-50 bg-white border border-slate-200 rounded-xl shadow-xl p-3 w-64 hidden md:block">
+      {/* Desktop: dropdown sotto il pulsante */}
+      <div className="absolute top-full left-0 mt-2 z-50 bg-white border border-slate-200 rounded-2xl shadow-2xl p-4 w-72 hidden md:block">
         <CalendarGrid
           selected={selected}
           onSelect={onSelect}
@@ -152,19 +169,20 @@ export default function CurrentWeekIndicator({ onInfoChange }) {
   }, [info, onInfoChange]);
 
   return (
-    <div className="flex flex-wrap items-center gap-3 mb-4 font-sans">
-      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-slate-200 bg-white shadow-sm">
+    <div className="flex flex-wrap items-center gap-2 sm:gap-3 font-sans">
+      {/* Badge settimana corrente */}
+      <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-slate-200 bg-white shadow-sm">
         {info ? (
           <>
-            <span className="font-black text-slate-800 text-lg">
+            <span className="font-black text-slate-900 text-base tracking-tight">
               {info.term}
             </span>
             <span className="text-slate-300 font-bold">•</span>
-            <span className="font-semibold text-slate-700">
-              {info.week}
+            <span className="font-semibold text-slate-600 text-sm tabular-nums">
+              Sett. {info.week}
             </span>
             <span
-              className={`px-2 py-0.5 rounded text-xs font-bold border ${info.colorClass}`}
+              className={`px-2.5 py-0.5 rounded-full text-xs font-black border shadow-sm ${info.colorClass}`}
             >
               {info.type}
             </span>
@@ -176,12 +194,15 @@ export default function CurrentWeekIndicator({ onInfoChange }) {
         )}
       </div>
 
+      {/* Selettore data */}
       <div className="relative">
         <button
           onClick={() => setOpen((o) => !o)}
-          className="px-3 py-1.5 text-sm rounded-md border border-slate-200 bg-white text-slate-700 shadow-sm hover:bg-slate-50 cursor-pointer"
+          aria-expanded={open}
+          aria-label="Scegli data"
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 text-sm rounded-full border border-slate-200 bg-white text-slate-700 font-medium shadow-sm hover:bg-slate-50 cursor-pointer transition-colors"
         >
-          📅 {formatDate(selected)}
+          📅 <span className="tabular-nums">{formatDate(selected)}</span>
         </button>
         {open && (
           <CalendarPopup
@@ -196,9 +217,9 @@ export default function CurrentWeekIndicator({ onInfoChange }) {
         href="https://www.accademiabellearti.fr.it/didattica/calendario-didattico/"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-blue-400 hover:text-blue-700 hover:underline font-medium ml-2"
+        className="text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium"
       >
-        - Apri calendario didattico
+        Calendario didattico ↗
       </a>
     </div>
   );
