@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #18181b;
+  --foreground: #f4f4f5;
 }
 
 @theme inline {
@@ -13,9 +13,9 @@
 }
 
 body {
-  /* Sfondo chiaro con leggero gradiente dall'alto, più profondità piatta */
+  /* Sfondo scuro (zinc-800) con un leggero schiarimento in alto per profondita */
   background:
-    radial-gradient(1200px 600px at 50% -200px, #ffffff 0%, transparent 70%),
+    radial-gradient(1200px 500px at 50% -150px, #27272a 0%, transparent 70%),
     var(--background);
   background-attachment: fixed;
   color: var(--foreground);

@@ -217,7 +217,7 @@ export default function CurrentWeekIndicator({ onInfoChange }) {
         href="https://www.accademiabellearti.fr.it/didattica/calendario-didattico/"
         target="_blank"
         rel="noopener noreferrer"
-        className="text-sm text-blue-600 hover:text-blue-800 hover:underline font-medium"
+        className="text-sm text-blue-400 hover:text-blue-300 hover:underline font-medium"
       >
         Calendario didattico ↗
       </a>
